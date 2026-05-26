@@ -370,7 +370,7 @@ export default function SideProfile() {
           <button
             type="button"
             onClick={handleEditClick}
-            className="w-full py-1.5 bg-brownbold hover:bg-[#644A40] text-white font-semibold rounded border border-black transition-colors duration-150 cursor-pointer text-sm"
+            className="w-full py-1.5 bg-brownbold text-white font-semibold rounded border border-black transition-colors duration-150 cursor-pointer text-sm"
           >
             Edit profile
           </button>
