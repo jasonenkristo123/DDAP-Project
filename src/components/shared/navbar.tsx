@@ -54,7 +54,7 @@ export default function Navbar({ onProfileToggle }: NavbarProps) {
 
   return (
     <>
-      <nav className="w-full border-b-2 z-40 bg-background-cream fixed border-black px-4 py-3 lg:py-0 lg:pt-4 md:px-6 flex items-center justify-between">
+      <nav className="w-full border-b-2 z-40 bg-background-cream sticky top-0 border-black px-4 py-3 lg:py-0 lg:pt-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button
             type="button"

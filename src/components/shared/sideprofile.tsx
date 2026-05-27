@@ -375,7 +375,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
           <button
             type="button"
             onClick={handleEditClick}
-            className="w-full py-1.5 bg-brownbold text-white font-semibold rounded border border-black transition-colors duration-150 cursor-pointer text-sm"
+            className="w-full py-1.5 bg-boldcream shadow-[6px_6px_0px_0px_#4A3728] hover:shadow-[0px_0px_0px_0px_#4A3728] hover:translate-x-[6px] hover:translate-y-[6px]  text-brownbold font-semibold rounded border-2  border-brownbold transition-all duration-200 cursor-pointer text-sm"
           >
             Edit profile
           </button>
@@ -549,7 +549,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
     return (
       <>
         {/* Desktop skeleton */}
-        <aside className="hidden md:flex w-72 md:w-80 shrink-0 border-r-2 border-black p-6 flex-col gap-6 min-h-[calc(100vh-66px)] animate-pulse ml-20 mt-20">
+        <aside className="hidden md:flex w-72 md:w-80 shrink-0 border-r-2 border-black p-6 flex-col gap-6 min-h-[calc(100vh-66px)] animate-pulse ml-20 mt-10">
           <div className="flex flex-col items-start w-full">
             <div className="w-44 h-44 rounded-full bg-black/5 border border-dashed border-black/20" />
             <div className="h-6 w-32 bg-black/5 rounded mt-4" />
@@ -563,7 +563,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
 
   return (
     <>
-      <aside className="hidden lg:flex w-72 md:w-80 shrink-0 border-black p-6 flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-20">
+      <aside className="hidden lg:flex w-72 md:w-80 shrink-0 border-black p-6 flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-10">
         {profileContent}
       </aside> 
       {isOpen && (

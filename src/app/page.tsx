@@ -20,24 +20,7 @@ ChartJS.register(
   Legend
 );
 
-
-
-const dataPinned = [
-  {
-    title: "Tugas DDAP Tentang Website",
-    desc: "Membuat Hi-Fi dan wireframe juga mengerjakan",
-    priority: "high",
-    dateCreate: "10/03/2026",
-    dateDone: "20/03/2026",
-  },
-  {
-    title: "Tugas Aljabar Linear",
-    desc: "Mengerjakan latihan aljabar dan quiz minggu depan",
-    priority: "Medium",
-    dateCreate: "26/03/2026",
-    dateDone: "03/04/2026",
-  },
-]
+import { dataPinned } from "@/data/todos";
 
 const barChartTodos = [
   {
@@ -129,7 +112,7 @@ export default function Home() {
         {dataPinned.map((data, index) => (
           <div
             key={index}
-            className="bg-boldcream border-[3px] border-brownbold p-6 rounded-xl space-y-3 w-full shadow-[6px_6px_0px_0px_#644a40] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40] transition-all duration-200 cursor-pointer"
+            className="bg-boldcream border-[3px] border-brownbold p-6 rounded-xl space-y-3 w-full neodesign"
           >
             <h2 className="text-brownbold font-bold text-xl md:text-2xl tracking-tight">
               {data.title}
@@ -169,7 +152,7 @@ export default function Home() {
       </div>
 
       <div className="w-full flex flex-col sm:flex-row gap-4 md:gap-6 mt-2">
-        <div className="bg-boldcream border-2 border-brownbold rounded-lg w-full sm:max-w-[85%] p-2 min-h-[120px] md:min-h-0 shadow-[6px_6px_0px_0px_#644a40] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40] transition-all duration-200">
+        <div className="bg-boldcream border-2 border-brownbold rounded-lg w-full sm:max-w-[85%] p-2 min-h-[120px] md:min-h-0 neodesign">
           <Bar
             data={{
               labels: barChartTodos.map((data) => data.month),
