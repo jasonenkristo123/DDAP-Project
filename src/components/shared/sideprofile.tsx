@@ -224,7 +224,7 @@ export default function SideProfile() {
   }
 
   return (
-    <aside className="w-72 md:w-80 shrink-0 border-black p-6 flex flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-12.5">
+    <aside className="w-72 md:w-80 shrink-0 border-black p-6 flex flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-20">
       <div className="flex flex-col items-start text-left w-full">
         <div className="relative group self-start">
           <div className="w-70 h-70 rounded-full overflow-hidden border border-black relative transition-transform duration-200">

@@ -29,7 +29,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="w-full border-b-2 border-black px-6 flex items-center justify-between">
+    <nav className="w-full border-b-2 fixed border-black px-6 flex items-center justify-between">
       <div className="flex items-center gap-4 pt-4">
         {menuItems.map((item) => {
           const isActive = pathname === item.path;
