@@ -113,6 +113,11 @@ interface ProfileData {
   avatar: string;
 }
 
+interface SideProfileProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
 const DEFAULT_PROFILE: ProfileData = {
   name: "Aemeath",
   username: "FleetSnowfluff",
@@ -145,7 +150,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   },
 ];
 
-export default function SideProfile() {
+export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
   const [mounted, setMounted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState<ProfileData>(DEFAULT_PROFILE);
@@ -164,6 +169,18 @@ export default function SideProfile() {
       }
     }
   }, []);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleEditClick = () => {
     setEditProfile({ ...profile });
@@ -210,24 +227,12 @@ export default function SideProfile() {
     fileInputRef.current?.click();
   };
 
-  if (!mounted) {
-    return (
-      <aside className="w-72 md:w-80 shrink-0 border-r-2 border-black p-6 flex flex-col gap-6 min-h-[calc(100vh-66px)] animate-pulse">
-        <div className="flex flex-col items-start w-full">
-          <div className="w-44 h-44 rounded-full bg-black/5 border border-dashed border-black/20" />
-          <div className="h-6 w-32 bg-black/5 rounded mt-4" />
-          <div className="h-4 w-40 bg-black/5 rounded mt-2" />
-          <div className="h-16 w-full bg-black/5 rounded mt-4" />
-        </div>
-      </aside>
-    );
-  }
-
-  return (
-    <aside className="w-72 md:w-80 shrink-0 border-black p-6 flex flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-20">
+  // The inner content of the profile, shared between desktop sidebar and mobile drawer
+  const profileContent = (
+    <>
       <div className="flex flex-col items-start text-left w-full">
         <div className="relative group self-start">
-          <div className="w-70 h-70 rounded-full overflow-hidden border border-black relative transition-transform duration-200">
+          <div className="w-32 h-32 md:w-70 md:h-70 rounded-full overflow-hidden border border-black relative transition-transform duration-200">
             <Image
               src={isEditing ? editProfile.avatar : profile.avatar}
               alt={profile.name}
@@ -280,14 +285,14 @@ export default function SideProfile() {
 
         {!isEditing ? (
           <div className="w-full space-y-1 mt-4">
-            <h2 className="text-[24px] font-extrabold text-black tracking-tight leading-none">
+            <h2 className="text-[20px] md:text-[24px] font-extrabold text-black tracking-tight leading-none">
               {profile.name}
             </h2>
-            <p className="text-[20px] font-medium text-black/60 pt-0.5">
+            <p className="text-[16px] md:text-[20px] font-medium text-black/60 pt-0.5">
               {profile.username} <span className="text-black/30">•</span>{" "}
               {profile.pronouns}
             </p>
-            <p className="text-[20px] text-black leading-6 pt-2 text-left font-normal">
+            <p className="text-[14px] md:text-[20px] text-black leading-5 md:leading-6 pt-2 text-left font-normal">
               {profile.bio}
             </p>
           </div>
@@ -396,7 +401,7 @@ export default function SideProfile() {
 
       <div className="w-full">
         {!isEditing ? (
-          <div className="flex flex-col gap-2 text-lg">
+          <div className="flex flex-col gap-2 text-base md:text-lg">
             <a
               href={`mailto:${profile.email}`}
               className="flex items-center gap-2 text-black hover:opacity-80 transition-opacity duration-150"
@@ -485,7 +490,7 @@ export default function SideProfile() {
         )}
       </div>
 
-      {/* Dividers and Achievements Section (Lined up cleanly, no bottom pushing) */}
+      {/* Dividers and Achievements Section */}
       <div className="w-full">
         {/* Simple thin divider line */}
         <div className="border-t border-black/15 my-1" />
@@ -537,6 +542,63 @@ export default function SideProfile() {
 
         <div className="border-t border-black/15 mt-4" />
       </div>
-    </aside>
+    </>
+  );
+
+  if (!mounted) {
+    return (
+      <>
+        {/* Desktop skeleton */}
+        <aside className="hidden md:flex w-72 md:w-80 shrink-0 border-r-2 border-black p-6 flex-col gap-6 min-h-[calc(100vh-66px)] animate-pulse ml-20 mt-20">
+          <div className="flex flex-col items-start w-full">
+            <div className="w-44 h-44 rounded-full bg-black/5 border border-dashed border-black/20" />
+            <div className="h-6 w-32 bg-black/5 rounded mt-4" />
+            <div className="h-4 w-40 bg-black/5 rounded mt-2" />
+            <div className="h-16 w-full bg-black/5 rounded mt-4" />
+          </div>
+        </aside>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <aside className="hidden lg:flex w-72 md:w-80 shrink-0 border-black p-6 flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-20">
+        {profileContent}
+      </aside> 
+      {isOpen && (
+        <div className="lg:hidden fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div
+            className="drawer-backdrop"
+            onClick={onClose}
+            onKeyDown={(e) => e.key === "Escape" && onClose?.()}
+          />
+
+          {/* Drawer panel */}
+          <aside className="drawer-enter fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-background-cream border-l-2 border-black z-50 flex flex-col overflow-y-auto">
+            {/* Drawer header with close button */}
+            <div className="flex items-center justify-between p-4 border-b border-black/15">
+              <h2 className="text-sm font-bold text-[#4A3728] uppercase tracking-wider">
+                Profile
+              </h2>
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-1.5 rounded-md hover:bg-black/5 transition-colors duration-150 cursor-pointer"
+                aria-label="Close profile drawer"
+              >
+                <X className="w-5 h-5 text-black" />
+              </button>
+            </div>
+
+            {/* Drawer content */}
+            <div className="p-5 flex flex-col gap-5 flex-1">
+              {profileContent}
+            </div>
+          </aside>
+        </div>
+      )}
+    </>
   );
 }

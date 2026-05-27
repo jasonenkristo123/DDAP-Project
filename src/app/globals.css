@@ -13,6 +13,8 @@
   --color-background-cream: #ede8d9;
   --color-boldcream: #ffdfb5;
   --color-brownbold: #644a40;
+  --color-bluebold: #00499D;
+  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,4 +28,47 @@ body {
   background-color: #ede8d9;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Mobile drawer backdrop */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 40;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Drawer slide-in from right */
+.drawer-enter {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-exit {
+  animation: slideOutRight 0.2s ease-in forwards;
+}
+
+/* Mobile nav dropdown */
+.nav-dropdown-enter {
+  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
