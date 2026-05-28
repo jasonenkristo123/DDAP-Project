@@ -122,7 +122,7 @@ const dataContributionComplete = [
 export default function Home() {
   return (
     <main className="p-4 md:p-8 lg:p-15 w-full min-h-full">
-      <h1 className="text-xl mt-10 md:mt-10">
+      <h1 className="text-xl font-semibold mt-10 md:mt-10">
         Pinned
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full mt-4">

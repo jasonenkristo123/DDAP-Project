@@ -375,7 +375,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
           <button
             type="button"
             onClick={handleEditClick}
-            className="w-full py-1.5 bg-brownbold text-white font-semibold rounded border border-black transition-colors duration-150 cursor-pointer text-sm"
+            className="w-full py-1.5 bg-brownbold border-2 border-black h-8 rounded-md flex items-center justify-center text-white font-semibold text-sm shadow-[6px_6px_0px_0px_#FFDFB5,6px_6px_0px_1px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#FFDFB5,4px_4px_0px_1px_#000] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#FFDFB5,2px_2px_0px_1px_#000] transition-all duration-200"
           >
             Edit profile
           </button>
