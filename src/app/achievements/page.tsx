@@ -1,7 +1,9 @@
+import AchievementsSection from "@/components/achievements/achievements-section";
+
 export default function Achievements() {
   return (
-    <div>
-      <h1>Achievements</h1>
-    </div>
+    <section>
+      <AchievementsSection />
+    </section>
   );
 }
