@@ -2,40 +2,33 @@
 import { Search, Triangle, PencilLine, X, Check, Calendar, Tag, AlertCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export default function SearchSection() {
-    // Dropdown toggles
+interface SearchSection {
+    types: string[];
+    sortOptions: string[];
+    showCreateForm?: boolean;
+}
+
+export default function SearchSection({ types, sortOptions, showCreateForm = true }: SearchSection) {
+
     const [isSearching, setIsSearching] = useState(false);
     const [isType, setIsType] = useState(false);
     const [isSort, setIsSort] = useState(false);
     const [isNew, setIsNew] = useState(false);
 
-    // Selected options
     const [selectedType, setSelectedType] = useState("Type");
     const [selectedSort, setSelectedSort] = useState("Sort By");
 
-    // Modal Form inputs
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDesc, setTaskDesc] = useState("");
     const [taskPriority, setTaskPriority] = useState("medium"); // "high" | "medium" | "low"
     const [taskCategory, setTaskCategory] = useState("Work");
     const [taskDueDate, setTaskDueDate] = useState("");
 
-    // Modal UI states
     const [formError, setFormError] = useState("");
     const [formSuccess, setFormSuccess] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const searchRef = useRef<HTMLDivElement>(null);
-
-    // Lists
-    const types = ["All", "Work", "Study", "Personal", "Urgent"];
-    const sortOptions = [
-        "Default",
-        "Priority (High → Low)",
-        "Priority (Low → High)",
-        "Date (Newest First)",
-        "Date (Oldest First)"
-    ];
 
     const handleSearch = () => {
         setIsSearching(!isSearching);
@@ -57,7 +50,6 @@ export default function SearchSection() {
 
     const handleNew = () => {
         setIsNew(true);
-        // Reset form states
         setTaskTitle("");
         setTaskDesc("");
         setTaskPriority("medium");
@@ -106,7 +98,6 @@ export default function SearchSection() {
         setFormError("");
         setIsSubmitting(true);
 
-        // Simulate API post delay
         setTimeout(() => {
             const newTaskPayload = {
                 title: taskTitle,
@@ -121,7 +112,6 @@ export default function SearchSection() {
             setIsSubmitting(false);
             setFormSuccess(true);
 
-            // Automatically close modal after showing the success state
             setTimeout(() => {
                 setIsNew(false);
                 setFormSuccess(false);
@@ -131,8 +121,7 @@ export default function SearchSection() {
     }
 
     return (
-        <div ref={searchRef} className="grid grid-cols-4 md:grid-cols-7 gap-2 relative">
-            {/* Search Input / Button */}
+        <div ref={searchRef} className={`grid grid-cols-4 ${showCreateForm ? "md:grid-cols-7" : "md:grid-cols-8"} gap-2 relative`}>
             {isSearching ? (
                 <div className="bg-boldcream border-2 rounded-sm gap-2 border-brownbold flex col-span-4 items-center justify-center neodesign relative h-10 px-2">
                     <input 
@@ -161,10 +150,10 @@ export default function SearchSection() {
                 </div>
             )}
 
-            <div className="relative col-span-1">
+            <div className={`relative col-span-1 ${showCreateForm ? "md:col-span-1" : " col-span-2 md:col-span-2"} `}>
                 <button 
                     onClick={handleType} 
-                    className="w-full bg-boldcream border-2 rounded-sm gap-1.5 border-brownbold neodesign flex items-center justify-center cursor-pointer h-10 hover:bg-[#F5F2EB] transition-colors px-1"
+                    className="w-full bg-boldcream border-2 rounded-sm gap-1.5 border-brownbold neodesign flex items-center justify-center cursor-pointer h-10 hover:bg-[#F5F2EB] transition-colors px-1 "
                 >
                     <span className="font-semibold text-brownbold select-none text-xs md:text-sm truncate">
                         {selectedType}
@@ -177,7 +166,7 @@ export default function SearchSection() {
                 </button>
 
                 {isType && (
-                    <div className="absolute top-[calc(100%+6px)] left-0 w-48 bg-boldcream border-2 border-brownbold rounded-md shadow-[4px_4px_0px_0px_#4A3728] z-50 flex flex-col text-left py-1 text-xs md:text-sm animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className={`absolute top-[calc(100%+6px)] left-0 w-full bg-boldcream border-2 border-brownbold rounded-md shadow-[4px_4px_0px_0px_#4A3728] z-50 flex flex-col text-left py-1 text-xs md:text-sm animate-in fade-in slide-in-from-top-1 duration-150`}>
                         {types.map((type) => (
                             <button
                                 key={type}
@@ -198,7 +187,7 @@ export default function SearchSection() {
             </div>
 
             {/* "Sort By" Filter Dropdown */}
-            <div className="relative col-span-2 md:col-span-1">
+            <div className={`relative col-span-2 ${showCreateForm ? "md:col-span-1" : "md:col-span-2"}`}>
                 <button 
                     onClick={handleSort} 
                     className="w-full bg-boldcream border-2 rounded-sm gap-1.5 border-brownbold neodesign flex items-center justify-center cursor-pointer h-10 hover:bg-[#F5F2EB] transition-colors px-1"
@@ -215,7 +204,7 @@ export default function SearchSection() {
 
                 {/* Neobrutalist Dropdown Overlay */}
                 {isSort && (
-                    <div className="absolute top-[calc(100%+6px)] right-0 w-48 bg-boldcream border-2 border-brownbold rounded-md shadow-[4px_4px_0px_0px_#4A3728] z-50 flex flex-col text-left py-1 text-xs md:text-sm animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="absolute top-[calc(100%+6px)] right-0 w-full bg-boldcream border-2 border-brownbold rounded-md shadow-[4px_4px_0px_0px_#4A3728] z-50 flex flex-col text-left py-1 text-xs md:text-sm animate-in fade-in slide-in-from-top-1 duration-150">
                         {sortOptions.map((option) => (
                             <button
                                 key={option}
@@ -235,16 +224,17 @@ export default function SearchSection() {
                 )}
             </div>
 
-            {/* "New" Task Creator Button */}
-            <div 
-                onClick={handleNew} 
-                className="bg-boldcream border-2 rounded-sm gap-2 border-brownbold neodesign flex items-center justify-center cursor-pointer h-10 hover:bg-[#F5F2EB] transition-colors col-span-1"
-            >
-                <PencilLine size={18} className="text-brownbold" />
-                <p className="font-semibold text-brownbold select-none text-xs md:text-sm">
-                    New
-                </p>
-            </div>
+            {showCreateForm && (
+                <div 
+                    onClick={handleNew} 
+                    className={`bg-boldcream border-2 rounded-sm gap-2 border-brownbold neodesign flex items-center justify-center cursor-pointer h-10 hover:bg-[#F5F2EB] transition-colors ${showCreateForm ? "col-span-1" : "hidden"}`}
+                >
+                    <PencilLine size={18} className="text-brownbold" />
+                    <p className="font-semibold text-brownbold select-none text-xs md:text-sm">
+                        New
+                    </p>
+                </div>
+            )}
 
             {isNew && (
                 <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-100 flex items-center justify-center p-4">
@@ -391,7 +381,6 @@ export default function SearchSection() {
                                         </select>
                                     </div>
 
-                                    {/* Due Date Picker */}
                                     <div className="space-y-1.5 text-left">
                                         <label htmlFor="dueDate" className="text-xs uppercase font-extrabold text-brownbold flex items-center gap-1">
                                             <Calendar size={13} />

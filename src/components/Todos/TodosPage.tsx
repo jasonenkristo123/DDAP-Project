@@ -7,9 +7,18 @@ import TodoItem from "./TodoItem";
 
 
 export default function TodosPage() {
+    const types = ["All", "Work", "Study", "Personal", "Urgent"];
+    const sortOptions = [
+        "Default",
+        "Priority (High → Low)",
+        "Priority (Low → High)",
+        "Date (Newest First)",
+        "Date (Oldest First)"
+    ];
+
     return (
         <div className="p-4 md:p-8 lg:p-15 w-full">
-            <SearchSection />
+            <SearchSection types={types} sortOptions={sortOptions} />
             <div className="mt-10">
                 {
                     dataPinned.map((data, index) => (
