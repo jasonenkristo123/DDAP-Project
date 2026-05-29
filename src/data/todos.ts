@@ -1,13 +1,15 @@
 export const dataPinned = [
   {
+    id: 1,
     title: "Tugas DDAP Tentang Website",
-    desc: "Membuat Hi-Fi dan wireframe juga mengerjakan",
+    desc: "Membuat Hi-Fi dan wireframe",
     priority: "high",
     dateCreate: "10/03/2026",
     dateDone: "20/03/2026",
     progress: "In Progress"
   },
   {
+    id: 2,
     title: "Tugas Aljabar Linear",
     desc: "Mengerjakan latihan aljabar dan quiz minggu depan",
     priority: "Medium",
@@ -16,6 +18,7 @@ export const dataPinned = [
     progress: "In Progress"
   },
   {
+    id: 3,
     title: "Tugas Desain Database",
     desc: "Membuat ER-Mapping berdasarkan ERD yang ada di Brone",
     priority: "Low",
@@ -24,6 +27,7 @@ export const dataPinned = [
     progress: "ToDo"
   },
   {
+    id: 4,
     title: "Tugas Peta Konsep Bahasa Indonesia",
     desc: "Membuat peta konsep materi bab 6",
     priority: "Done",

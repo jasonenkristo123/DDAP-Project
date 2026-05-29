@@ -13,7 +13,7 @@ interface TemplateCardProps {
 
 export default function TemplateCard({ template }: TemplateCardProps) {
   return (
-    <div className="bg-brownbold text-white rounded-lg p-5 flex flex-col justify-between min-h-[300px] shadow-[6px_6px_0px_0px_#4A3728]/30">
+    <div className="bg-brownbold text-white rounded-lg p-5 flex flex-col justify-between min-h-[300px] shadow-[6px_6px_0px_0px_#4A3728]/50">
       <div className="space-y-4">
         <span className="inline-block bg-boldcream text-black text-sm font-bold px-2.5 py-0.5 rounded-md">
           {template.category}
