@@ -370,7 +370,7 @@ export default function SearchSection({
       {isNew && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-100 flex items-center justify-center p-4">
           <div
-            className="bg-boldcream border-[3px] border-brownbold rounded-xl shadow-[8px_8px_0px_0px_#4A3728] max-w-lg w-full overflow-hidden flex flex-col relative animate-in fade-in zoom-in-95 duration-200"
+            className="bg-boldcream border-[3px] border-brownbold rounded-xl shadow-[8px_8px_0px_0px_#ffdfb5] max-w-lg w-full overflow-hidden flex flex-col relative animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-[#4A3728] text-[#EFEAD8] px-6 py-4 flex justify-between items-center border-b-[3px] border-brownbold">
@@ -661,7 +661,7 @@ export default function SearchSection({
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 py-2 bg-brownbold text-white font-bold text-sm rounded-lg border-2 border-background-cream shadow-[4px_4px_0px_0px_#644a40] hover:translate-x-px hover:translate-y-px hover:shadow-[3px_3px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none disabled:opacity-50 transition-all cursor-pointer flex items-center justify-center gap-2"
+                    className="px-6 py-2 bg-brownbold text-white font-bold text-sm rounded-lg border-2 border-background-cream shadow-[4px_4px_0px_0px_#644a40] hover:translate-x-px hover:translate-y-px hover:shadow-none active:translate-x-[4px] active:translate-y-[4px] active:shadow-none disabled:opacity-50 transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? "Saving..." : "Save Template"}
                   </button>
