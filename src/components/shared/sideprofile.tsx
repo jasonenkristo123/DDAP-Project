@@ -132,19 +132,19 @@ const DEFAULT_PROFILE: ProfileData = {
 const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: "1",
-    image: "/badge_yuji.png",
+    image: "/yuji.webp",
     name: "Jujutsu Novice",
     description: "Taking the first steps into the jujutsu world.",
   },
   {
     id: "2",
-    image: "/badge_gojo.png",
+    image: "/gojo.webp",
     name: "Limitless Potential",
     description: "Unlocking the absolute power within.",
   },
   {
     id: "3",
-    image: "/badge_fire.png",
+    image: "/sukuna.webp",
     name: "Spiritual Spark",
     description: "Igniting a fiery passion for technology.",
   },

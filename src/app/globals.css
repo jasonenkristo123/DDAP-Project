@@ -10,11 +10,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-manrope: var(--font-manrope);
   --color-background-cream: #ede8d9;
   --color-boldcream: #ffdfb5;
   --color-brownbold: #644a40;
-  --color-bluebold: #00499D;
-  
+  --color-bluebold: #00499d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,7 +27,7 @@
 body {
   background-color: #ede8d9;
   color: black;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif, Manrope;
 }
 
 .drawer-backdrop {
@@ -51,27 +51,73 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutRight {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @layer components {
   .neodesign {
-    @apply shadow-[6px_6px_0px_0px_#644a40] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40] transition-all duration-200 cursor-pointer
+    @apply shadow-[6px_6px_0px_0px_#644a40] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40] transition-all duration-200 cursor-pointer;
+  }
+}
+
+@layer {
+  .font-manrope-400 {
+    font-family: var(--font-manrope);
+    font-weight: 400;
+    font-style: normal;
+  }
+  .font-manrope-500 {
+    font-family: var(--font-manrope);
+    font-weight: 500;
+    font-style: normal;
+  }
+  .font-manrope-600 {
+    font-family: var(--font-manrope);
+    font-weight: 600;
+    font-style: normal;
+  }
+  .font-manrope-700 {
+    font-family: var(--font-manrope);
+    font-weight: 700;
+    font-style: normal;
+  }
+  .font-manrope-800 {
+    font-family: var(--font-manrope);
+    font-weight: 800;
+    font-style: normal;
   }
 }

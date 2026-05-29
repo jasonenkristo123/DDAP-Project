@@ -37,7 +37,7 @@ export default function AchievementsSection() {
 
 
     return (
-        <div className="w-full p-4 md:p-8 lg:p-15  ">
+        <div className="w-full p-4 md:p-8 lg:p-15">
             <SearchSection types={types} sortOptions={sortOptions} showCreateForm={false} />
             {
                 dataAchievements.map((data, index) => (
@@ -49,20 +49,20 @@ export default function AchievementsSection() {
                             </div>
                             <div>
                                 <div className="flex items-center gap-3">
-                                    <h1 className="text-xl">
+                                    <h1 className="text-xl font-manrope-700">
                                         {data.title}
                                     </h1>
                                     <div className={`border-2 border-brownbold ${data.difficulty.toLowerCase() === "hard" ? "bg-red-500" : data.difficulty.toLowerCase() === "medium" ? "bg-yellow-300" : "bg-green-500"} px-3 py-0.5 rounded-full`}>
-                                        <p className="text-xs">
+                                        <p className="text-xs font-manrope-600">
                                             {data.difficulty}
                                         </p>
                                     </div>
                                 </div>
-
-                                <h2 className="font-semibold mt-1">
+                    
+                                <h2 className="mt-1 font-manrope-600">
                                     {data.desc}
                                 </h2>
-                                <p className="mt-2 font-semibold text-brownbold">
+                                <p className="mt-2 text-brownbold font-manrope-500">
                                     {data.completed}
                                 </p>
                             </div>
