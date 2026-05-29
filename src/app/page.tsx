@@ -106,7 +106,7 @@ const dataContributionComplete = [
 export default function Home() {
   return (
     <main className="p-4 md:p-8 lg:p-15 w-full min-h-full">
-      <h1 className="text-xl font-semibold mt-10 md:mt-10">Pinned</h1>
+      <h1 className="text-xl font-semibold">Pinned</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full mt-4">
         {dataPinned.map((data, index) => (
           <div
@@ -135,9 +135,12 @@ export default function Home() {
                 </div>
               </div>
 
-              <button className="bg-background-cream text-brownbold font-bold text-xs px-3.5 py-1.5 rounded-lg border-2 border-brownbold shadow-[2px_2px_0px_0px_#644a40] hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_#644a40] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer">
+              <Link
+                href={`/todos?highlight=${data.id || index}`}
+                className="bg-background-cream text-brownbold font-bold text-xs px-3.5 py-1.5 rounded-lg border-2 border-brownbold shadow-[2px_2px_0px_0px_#644a40] hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_#644a40] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer inline-block"
+              >
                 Lihat Detail
-              </button>
+              </Link>
             </div>
           </div>
         ))}

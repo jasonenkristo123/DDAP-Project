@@ -1,8 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { ArrowRight, Star } from "lucide-react";
 
 interface TodoData {
+  id?: number;
   title: string;
   desc: string;
   priority: string;
@@ -19,47 +21,80 @@ export default function TodoItem({
   onEditClick: (data: TodoData) => void;
 }) {
   const [isPinned, setIsPinned] = useState(false);
+  const searchParams = useSearchParams();
 
   const handlePinned = () => {
     setIsPinned(!isPinned);
   };
 
+  const highlightId = searchParams.get("highlight");
+  const [isHighlighted, setIsHighlighted] = useState(false);
+
+  const currentId = String(data.id);
+
+  useEffect(() => {
+    if (highlightId && highlightId === currentId) {
+      setIsHighlighted(true);
+
+      const element = document.getElementById(`todo-card-${currentId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      // 2 Second Highlight
+      const timer = setTimeout(() => {
+        setIsHighlighted(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [highlightId, currentId]);
+
   return (
     <div className="w-full mt-3">
-      <div className="w-full bg-black h-[2px]" />
-      <div className="flex items-center justify-between mt-3">
-        <div className="flex items-center gap-3">
-          <h1
-            className="text-2xl font-semibold hover:underline cursor-pointer"
-            onClick={() => onEditClick(data)}
+      <div
+        id={`todo-card-${currentId}`}
+        className={`pb-2 px-2 rounded-md transition-all duration-300 ${
+          isHighlighted
+            ? "animate-highlight border-[#4A3728] ring-2 ring-[#4A3728]/30"
+            : ""
+        }`}
+      >
+        <div className="w-full bg-black h-[3px]" />
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center gap-3">
+            <h1
+              className="text-2xl font-semibold hover:underline cursor-pointer"
+              onClick={() => onEditClick(data)}
+            >
+              {data.title}
+            </h1>
+            <div className="bg-gray-300 rounded-full px-2 font-semibold">
+              <p>{data.progress}</p>
+            </div>
+          </div>
+          <div
+            onClick={handlePinned}
+            className={`bg-boldcream border-2 border-brownbold max-w-[7%] w-full flex items-center justify-center gap-2 rounded-sm transition-all duration-200 cursor-pointer ${isPinned ? "translate-x-[4px] translate-y-[4px] shadow-[2px_2px_0px_0px_#644a40]" : "shadow-[6px_6px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40]"}`}
           >
-            {data.title}
-          </h1>
-          <div className="bg-gray-300 rounded-full px-2 font-semibold">
-            <p>{data.progress}</p>
+            <Star fill="yellow" className="w-5 h-5" />
+            <p className="font-bold">Pin</p>
           </div>
         </div>
-        <div
-          onClick={handlePinned}
-          className={`bg-boldcream border-2 border-brownbold max-w-[7%] w-full flex items-center justify-center gap-2 rounded-sm transition-all duration-200 cursor-pointer ${isPinned ? "translate-x-[4px] translate-y-[4px] shadow-[2px_2px_0px_0px_#644a40]" : "shadow-[6px_6px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40]"}`}
-        >
-          <Star fill="yellow" className="w-5 h-5" />
-          <p className="font-bold">Pin</p>
-        </div>
-      </div>
-      <h2 className="text-xl font-light font-sans">{data.desc}</h2>
-      <div className="flex items-center gap-6 mt-4">
-        <div className="flex items-center gap-2">
-          <div
-            className={`${data.priority.toLowerCase() === "high" ? "bg-red-500" : data.priority.toLowerCase() === "medium" ? "bg-orange-400" : data.priority.toLowerCase() === "low" ? "bg-green-500" : "bg-blue-500"} w-3 h-3 rounded-full `}
-          />
-          <p className="capitalize font-medium">{data.priority}</p>
-        </div>
+        <h2 className="text-xl font-light font-sans">{data.desc}</h2>
+        <div className="flex items-center gap-6 mt-4">
+          <div className="flex items-center gap-2">
+            <div
+              className={`${data.priority.toLowerCase() === "high" ? "bg-red-500" : data.priority.toLowerCase() === "medium" ? "bg-orange-400" : data.priority.toLowerCase() === "low" ? "bg-green-500" : "bg-blue-500"} w-3 h-3 rounded-full `}
+            />
+            <p className="capitalize font-medium">{data.priority}</p>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <p>{data.dateCreate}</p>
-          <ArrowRight size={17} />
-          <p>{data.dateDone}</p>
+          <div className="flex items-center gap-2">
+            <p>{data.dateCreate}</p>
+            <ArrowRight size={17} />
+            <p>{data.dateDone}</p>
+          </div>
         </div>
       </div>
     </div>

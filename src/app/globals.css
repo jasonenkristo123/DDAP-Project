@@ -94,6 +94,23 @@ body {
   }
 }
 
+@layer utilities {
+  @keyframes highlight-flash {
+    0% {
+      background-color: #FFE9CD;
+      box-shadow: 0 0 15px rgba(74, 55, 40, 0.3);
+    }
+    100% {
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  .animate-highlight {
+    animation: highlight-flash 2s ease-in-out forwards;
+  }
+}
+
 @layer {
   .font-manrope-400 {
     font-family: var(--font-manrope);
