@@ -8,29 +8,30 @@ import { useEffect, useRef, useState } from "react";
 const GmailIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 48 48"
+    viewBox="0 0 256 193"
     width="20"
     height="20"
-    className="shrink-0"
-    {...props}
+    className="opacity:1;"
   >
-    <title>Gmail</title>
     <path
       fill="#4285F4"
-      d="M45 16.2v22.5c0 1.8-1.5 3.3-3.3 3.3h-7.2V16.2l10.5-7.8L45 16.2z"
+      d="M58.182 192.05V93.14L27.507 65.077L0 49.504v125.091c0 9.658 7.825 17.455 17.455 17.455z"
     />
     <path
       fill="#34A853"
-      d="M13.5 16.2v25.8H6.3C4.5 42 3 40.5 3 38.7V16.2l10.5-7.8L13.5 16.2z"
+      d="M197.818 192.05h40.727c9.659 0 17.455-7.826 17.455-17.455V49.505l-31.156 17.837l-27.026 25.798z"
     />
-    <path
-      fill="#FBBC05"
-      d="M34.5 7.5V16.2L24 24 13.5 16.2V7.5L24 15l10.5-7.5z"
-    />
-    <path fill="#EA4335" d="M3 16.2V11c0-1.8 1.5-3.3 3.3-3.3h7.2v8.5L3 16.2z" />
     <path
       fill="#EA4335"
-      d="M45 16.2V11c0-1.8-1.5-3.3-3.3-3.3h-7.2v8.5L45 16.2z"
+      d="m58.182 93.14l-4.174-38.647l4.174-36.989L128 69.868l69.818-52.364l4.669 34.992l-4.669 40.644L128 145.504z"
+    />
+    <path
+      fill="#FBBC04"
+      d="M197.818 17.504V93.14L256 49.504V26.231c0-21.585-24.64-33.89-41.89-20.945z"
+    />
+    <path
+      fill="#C5221F"
+      d="m0 49.504l26.759 20.07L58.182 93.14V17.504L41.89 5.286C24.61-7.66 0 4.646 0 26.23z"
     />
   </svg>
 );
@@ -565,7 +566,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
     <>
       <aside className="hidden lg:flex w-72 md:w-80 shrink-0 border-black p-6 flex-col gap-5 min-h-[calc(100vh-66px)] transition-all duration-300 ml-20 mt-10">
         {profileContent}
-      </aside> 
+      </aside>
       {isOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
           {/* Backdrop */}

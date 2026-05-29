@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import Link from "next/link";
 import { ArrowRight, SquareCheckBig, SquarePlus } from "lucide-react";
 import { Bar } from "react-chartjs-2";
 import {
@@ -17,7 +18,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 import { dataPinned } from "@/data/todos";
@@ -71,43 +72,41 @@ const barChartTodos = [
     month: "Desember",
     totalTodos: 12,
   },
-]
+];
 
 const dataContributionCreate = [
   {
     title: "Tugas DDAP Tentang Website",
     priority: "high",
     date: "20 March",
-    daysleft: 1
+    daysleft: 1,
   },
   {
     title: "Tugas Aljabar Linear",
     priority: "medium",
     date: "03 April",
-    daysleft: 3
+    daysleft: 3,
   },
   {
     title: "Tugas Desain Database",
     priority: "low",
     date: "10 April",
-    daysleft: 7
-  }
-]
+    daysleft: 7,
+  },
+];
 
 const dataContributionComplete = [
   {
     title: "Tugas Peta Konsep Bahasa Indonesia",
     date: "16 March",
-    priority: "completed"
-  }
-]
+    priority: "completed",
+  },
+];
 
 export default function Home() {
   return (
     <main className="p-4 md:p-8 lg:p-15 w-full min-h-full">
-      <h1 className="text-xl font-semibold mt-10 md:mt-10">
-        Pinned
-      </h1>
+      <h1 className="text-xl font-semibold mt-10 md:mt-10">Pinned</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full mt-4">
         {dataPinned.map((data, index) => (
           <div
@@ -123,7 +122,9 @@ export default function Home() {
             <div className="flex items-center justify-between flex-wrap gap-3 pt-2">
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold border-2 border-brownbold bg-background-cream text-brownbold shadow-[2px_2px_0px_0px_#644a40]">
-                  <span className={`w-2 h-2 rounded-full shrink-0 ${data.priority.toLowerCase() === "high" ? "bg-red-600" : "bg-orange-500"}`} />
+                  <span
+                    className={`w-2 h-2 rounded-full shrink-0 ${data.priority.toLowerCase() === "high" ? "bg-red-600" : "bg-orange-500"}`}
+                  />
                   <span className="capitalize">{data.priority}</span>
                 </span>
 
@@ -143,12 +144,8 @@ export default function Home() {
       </div>
 
       <div className="w-full lg:max-w-[82%] flex justify-between items-center mt-10 md:mt-20">
-        <h2 className="text-lg md:text-xl font-medium">
-          1000 todos last year
-        </h2>
-        <h3 className="text-xs md:text-sm">
-          Contribution Settings
-        </h3>
+        <h2 className="text-lg md:text-xl font-medium">1000 todos last year</h2>
+        <h3 className="text-xs md:text-sm">Contribution Settings</h3>
       </div>
 
       <div className="w-full flex flex-col sm:flex-row gap-4 md:gap-6 mt-2">
@@ -156,15 +153,17 @@ export default function Home() {
           <Bar
             data={{
               labels: barChartTodos.map((data) => data.month),
-              datasets: [{
-                label: "Total Todos",
-                data: barChartTodos.map((data) => data.totalTodos),
-                backgroundColor: "#644a40",
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 4,
-                borderSkipped: false,
-              }]
+              datasets: [
+                {
+                  label: "Total Todos",
+                  data: barChartTodos.map((data) => data.totalTodos),
+                  backgroundColor: "#644a40",
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 4,
+                  borderSkipped: false,
+                },
+              ],
             }}
             options={{
               responsive: true,
@@ -194,8 +193,8 @@ export default function Home() {
                 },
                 x: {
                   display: false,
-                }
-              }
+                },
+              },
             }}
           />
         </div>
@@ -211,13 +210,8 @@ export default function Home() {
 
       <div className="flex items-center gap-4 lg:max-w-[85%] mt-6 md:mt-10 pl-0 md:pl-10">
         <div className="flex gap-3 shrink-0">
-          <h3 className="text-lg md:text-xl">
-            March
-          </h3>
-          <p className="text-lg md:text-xl">
-            2026
-          </p>
-
+          <h3 className="text-lg md:text-xl">March</h3>
+          <p className="text-lg md:text-xl">2026</p>
         </div>
         <div className="w-full bg-black h-px" />
       </div>
@@ -238,64 +232,59 @@ export default function Home() {
         <div className="mt-4 md:mt-10 w-full min-w-0">
           <div className="flex items-center gap-2 md:hidden">
             <SquarePlus className="w-5 h-5 shrink-0" />
-            <h3 className="text-lg font-medium">
-              Created 40 Todo List
-            </h3>
+            <h3 className="text-lg font-medium">Created 40 Todo List</h3>
           </div>
-          <h3 className="text-xl hidden md:block">
-            Created 40 Todo List
-          </h3>
-          {
-            dataContributionCreate.map((data, index) => (
-              <div key={index} className="flex flex-col gap-1 sm:grid sm:grid-cols-[1fr_13%_40%_18%] xl:grid-cols-[1fr_13%_40%_10%] max-w-[85%] w-full items-start sm:items-center sm:gap-4 space-y-3">
-                <h4 className="text-bluebold md:truncate text-base md:text-lg wrap-break-words">
+          <h3 className="text-xl hidden md:block">Created 40 Todo List</h3>
+          {dataContributionCreate.map((data, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-1 sm:grid sm:grid-cols-[1fr_13%_40%_18%] xl:grid-cols-[1fr_13%_40%_10%] max-w-[85%] w-full items-start sm:items-center sm:gap-4 space-y-3"
+            >
+              <h4 className="text-bluebold md:truncate text-base md:text-lg wrap-break-words">
+                {data.title}
+              </h4>
+              <p className="text-xs md:text-sm text-black/60 sm:text-black">
+                {data.date}
+              </p>
+              <div
+                className={`rounded-full h-2 sm:h-3 w-full ${data.priority === "high" ? "bg-red-600" : data.priority === "medium" ? "bg-orange-400" : "bg-green-600"}`}
+              />
+              <p className="text-xs md:text-sm">
+                {data.daysleft}{" "}
+                <span>{data.daysleft > 1 ? "days left" : "day left"}</span>
+              </p>
+            </div>
+          ))}
+
+          <div className="w-full lg:max-w-[85%] mt-8 md:mt-13 space-y-4">
+            <div className="flex items-center gap-2 md:hidden">
+              <SquareCheckBig className="w-5 h-5 shrink-0" />
+              <h3 className="text-lg font-medium">Complete 5 Todo List</h3>
+            </div>
+            <h3 className="text-xl hidden md:block">Complete 5 Todo List</h3>
+            {dataContributionComplete.map((data, index) => (
+              <div
+                key={index}
+                className="flex flex-col gap-1 sm:grid sm:grid-cols-[1fr_20%_2fr] xl:grid-cols-[1fr_10%_2fr] 2xl: w-full md:max-w-[85%] xl:max-w-full items-start sm:items-center"
+              >
+                <h4 className="text-bluebold max-w-[250px] text-base md:truncate md:text-lg wrap-break-words">
                   {data.title}
                 </h4>
                 <p className="text-xs md:text-sm text-black/60 sm:text-black">
                   {data.date}
                 </p>
-                <div className={`rounded-full h-2 sm:h-3 w-full ${data.priority === "high" ? "bg-red-600" : data.priority === "medium" ? "bg-orange-400" : "bg-green-600"}`} />
-                <p className="text-xs md:text-sm">
-                  {data.daysleft} <span>{data.daysleft > 1 ? "days left" : "day left"}</span>
-                </p>
+                <div className="rounded-full h-2 sm:h-3 w-full bg-blue-300" />
               </div>
-            ))
-          }
-
-          <div className="w-full lg:max-w-[85%] mt-8 md:mt-13 space-y-4">
-            <div className="flex items-center gap-2 md:hidden">
-              <SquareCheckBig className="w-5 h-5 shrink-0" />
-              <h3 className="text-lg font-medium">
-                Complete 5 Todo List
-              </h3>
-            </div>
-            <h3 className="text-xl hidden md:block">
-              Complete 5 Todo List
-            </h3>
-            {
-              dataContributionComplete.map((data, index) => (
-                <div key={index} className="flex flex-col gap-1 sm:grid sm:grid-cols-[1fr_20%_2fr] xl:grid-cols-[1fr_10%_2fr] 2xl: w-full md:max-w-[85%] xl:max-w-full items-start sm:items-center">
-                  <h4 className="text-bluebold max-w-[250px] text-base md:truncate md:text-lg wrap-break-words">
-                    {data.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-black/60 sm:text-black">
-                    {data.date}
-                  </p>
-                  <div className="rounded-full h-2 sm:h-3 w-full bg-blue-300" />
-                </div>
-              ))
-            }
+            ))}
           </div>
         </div>
       </div>
 
       <div className="w-full lg:max-w-[80%] bg-boldcream rounded-lg flex items-center justify-center p-2 lg:ml-[10%] border-2 border-brownbold mt-6 shadow-[6px_6px_0px_0px_#644a40] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_#644a40] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[2px_2px_0px_0px_#644a40] transition-all duration-200 cursor-pointer">
-        <h5 className="text-brownbold text-sm md:text-base">
+        <Link href="/todos" className="text-brownbold text-sm md:text-base">
           Show more todos
-        </h5>
-
+        </Link>
       </div>
-
     </main>
   );
 }
