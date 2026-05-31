@@ -1,37 +1,73 @@
 "use client";
-import { useState } from "react";
-import { dataTemplate } from "@/data/template";
+import { useEffect, useState } from "react";
 import SearchSection from "../shared/search-section";
 import TemplateCard, { TemplateData } from "./TemplateCard";
 import FormModal, { ModalFormData } from "../shared/formModal";
+import { getAllTemplates, createTemplate, useTemplate } from "../api/templateApi";
 
 export default function TemplatesPage() {
+  const [templates, setTemplates] = useState<TemplateData[]>([]);
+  const [searchVal, setSearchVal] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch templates from the backend
+  const fetchTemplates = async (searchQuery?: string) => {
+    try {
+      setIsLoading(true);
+      const res = await getAllTemplates(searchQuery);
+      setTemplates(res.data || []);
+    } catch (err) {
+      console.error("Failed to load templates:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTemplates(searchVal);
+  }, [searchVal]);
 
   const handleTriggerCreate = () => {
     setIsModalOpen(true);
   };
 
   const handleTemplateSubmit = async (payload: ModalFormData) => {
-    console.log("SUCCESS CREATE NEW TEMPLATE:", payload);
-    setIsModalOpen(false);
+    try {
+      // Map frontend priority ("high", "medium", "low") to backend priority enum ("High", "Medium", "Low")
+      const mappedPriority = payload.priority
+        ? payload.priority.charAt(0).toUpperCase() + payload.priority.slice(1)
+        : "Medium";
+
+      await createTemplate({
+        title: payload.title,
+        description: payload.description || "",
+        category: payload.category,
+        priority: mappedPriority,
+        due_days: payload.dueDays ?? 0,
+      });
+
+      setIsModalOpen(false);
+      fetchTemplates(searchVal);
+    } catch (err) {
+      console.error("Failed to create template:", err);
+      alert("Failed to create template. Please try again.");
+    }
   };
 
-  const handleUseTemplate = (template: TemplateData) => {
-    const newTodoPayload = {
-      id: Date.now(),
-      title: `New ${template.title}`,
-      desc: template.description || "No description",
-      priority: template.priority || "medium",
-      category: template.category,
-      dateCreate: new Date().toLocaleDateString("id-ID"),
-      progress: "ToDo",
-    };
-    console.log("🚀 MENGIRIM TODOS BARU DARI TEMPLATE:", newTodoPayload);
+  const handleUseTemplate = async (template: TemplateData) => {
+    if (!template.id_template) {
+      alert("Template ID is missing!");
+      return;
+    }
 
-    alert(
-      `Sukses menggunakan template "${template.title}"!\nData Todo baru telah tercetak di Console.`,
-    );
+    try {
+      await useTemplate(template.id_template);
+      alert(`Success using template "${template.title}"! A new todo has been added to your list.`);
+    } catch (err) {
+      console.error("🚀 Error menggunakan template:", err);
+      alert("Gagal menggunakan template. Silakan coba lagi.");
+    }
   };
 
   return (
@@ -42,17 +78,30 @@ export default function TemplatesPage() {
           showFilters={false}
           buttonText="New Template"
           onNewClick={handleTriggerCreate}
+          onSearchChange={setSearchVal}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
-        {dataTemplate.map((item, index) => (
-          <TemplateCard
-            key={index}
-            template={item}
-            onUse={handleUseTemplate} // 3. Oper fungsi penangan ke komponen anak
-          />
-        ))}
-      </div>
+      
+      {isLoading ? (
+        <div className="flex justify-center items-center py-20">
+          <p className="text-lg font-bold text-brownbold animate-pulse">Loading templates...</p>
+        </div>
+      ) : templates.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <p className="text-lg font-bold text-brownbold/70">No templates found.</p>
+          <p className="text-sm text-brownbold/50">Try searching for something else or create a new template!</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
+          {templates.map((item, index) => (
+            <TemplateCard
+              key={item.id_template ?? index}
+              template={item}
+              onUse={handleUseTemplate}
+            />
+          ))}
+        </div>
+      )}
 
       <FormModal
         isOpen={isModalOpen}

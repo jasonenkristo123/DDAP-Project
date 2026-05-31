@@ -2,11 +2,12 @@ import React from "react";
 import { SquareCheckBig } from "lucide-react";
 
 export interface TemplateData {
+  id_template?: number | string;
   title: string;
   category: string;
   description: string;
   priority: string;
-  dueDate: number;
+  due_days: number;
 }
 
 interface TemplateCardProps {
@@ -30,7 +31,7 @@ export default function TemplateCard({ template, onUse }: TemplateCardProps) {
           Priority: {template.priority}
         </p>
         <p className="text-lg font-medium text-[#EFEAD8]">
-          Due Date: {template.dueDate} days
+          Due Days: {template.due_days} days
         </p>
       </div>
 

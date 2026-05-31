@@ -1,7 +1,9 @@
+import KanbanPage from "@/components/kanban/kanban-page";
+
 export default function Kanban() {
   return (
-    <div>
-      <h1>Kanban</h1>
-    </div>
+    <section>
+      <KanbanPage />
+    </section>
   );
 }

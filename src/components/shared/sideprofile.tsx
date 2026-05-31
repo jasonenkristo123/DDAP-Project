@@ -3,6 +3,7 @@
 import { Camera, Check, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { GetProfileById, UpdateProfile } from "@/components/api/sideProfileApi";
 
 // Beautiful custom multi-color SVGs for exact brand fidelity matching the figma mockup
 const GmailIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -159,16 +160,31 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
   const [hoveredBadge, setHoveredBadge] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const fetchProfile = async () => {
+    try {
+      const res = await GetProfileById(1);
+      if (res && res.data) {
+        const data = res.data;
+        const mappedProfile: ProfileData = {
+          name: data.displayName || "",
+          username: data.username || "",
+          pronouns: data.pronouns || "",
+          bio: data.bio || "",
+          email: data.email || "",
+          instagram: data.instagram || "",
+          linkedin: data.linkedin || "",
+          avatar: data.profilePhotoUrl || "/aemeath_avatar.png",
+        };
+        setProfile(mappedProfile);
+      }
+    } catch (e) {
+      console.error("Failed to fetch profile from API", e);
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("geulist_profile");
-    if (stored) {
-      try {
-        setProfile(JSON.parse(stored));
-      } catch (e) {
-        console.error("Failed to parse profile data from localStorage", e);
-      }
-    }
+    fetchProfile();
   }, []);
 
   // Lock body scroll when mobile drawer is open
@@ -192,12 +208,42 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
     setIsEditing(false);
   };
 
-  const handleSave = () => {
-    setProfile(editProfile);
-    localStorage.setItem("geulist_profile", JSON.stringify(editProfile));
-
-    window.dispatchEvent(new Event("geulist_profile_updated"));
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      const updatedProfile = {
+        displayName: editProfile.name,
+        username: editProfile.username,
+        pronouns: editProfile.pronouns,
+        bio: editProfile.bio,
+        email: editProfile.email,
+        instagram: editProfile.instagram,
+        linkedin: editProfile.linkedin,
+        profilePhotoUrl: editProfile.avatar,
+      };
+      
+      const res = await UpdateProfile(1, updatedProfile);
+      if (res && res.data) {
+        const data = res.data;
+        const mappedProfile: ProfileData = {
+          name: data.displayName || "",
+          username: data.username || "",
+          pronouns: data.pronouns || "",
+          bio: data.bio || "",
+          email: data.email || "",
+          instagram: data.instagram || "",
+          linkedin: data.linkedin || "",
+          avatar: data.profilePhotoUrl || "/aemeath_avatar.png",
+        };
+        setProfile(mappedProfile);
+      } else {
+        setProfile(editProfile);
+      }
+      
+      window.dispatchEvent(new Event("geulist_profile_updated"));
+      setIsEditing(false);
+    } catch (e) {
+      console.error("Failed to update profile", e);
+    }
   };
 
   const handleChange = (

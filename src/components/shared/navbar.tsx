@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getAllTotalTodos } from "../api/todolistApi";
 
 interface MenuItem {
   name: string;
@@ -28,6 +29,20 @@ interface NavbarProps {
 export default function Navbar({ onProfileToggle }: NavbarProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const [totalTodos, setTotalTodos] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchTotalTodos = async () => {
+      try {
+        const res = await getAllTotalTodos();
+        setTotalTodos(res);
+      } catch (err) {
+        console.error("Failed to fetch total todos:", err);
+      }
+    };
+    fetchTotalTodos();
+  }, []);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -46,7 +61,7 @@ export default function Navbar({ onProfileToggle }: NavbarProps) {
 
   const menuItems: MenuItem[] = [
     { name: "Dashboard", path: "/", icon: FileChartPie },
-    { name: "Todos", path: "/todos", icon: ListTodo, badge: 20 },
+    { name: "Todos", path: "/todos", icon: ListTodo, badge: totalTodos },
     { name: "Kanban", path: "/kanban", icon: FolderKanban },
     { name: "Templates", path: "/templates", icon: LayoutPanelTop },
     { name: "Achievements", path: "/achievements", icon: Trophy },

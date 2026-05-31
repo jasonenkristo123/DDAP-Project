@@ -8,7 +8,10 @@ interface SearchSectionProps {
   showCreateForm?: boolean;
   showFilters?: boolean;
   buttonText?: string;
-  onNewClick: () => void;
+  onNewClick?: () => void;
+  onSearchChange?: (val: string) => void;
+  onTypeChange?: (val: string) => void;
+  onSortChange?: (val: string) => void;
 }
 
 export default function SearchSection({
@@ -18,8 +21,12 @@ export default function SearchSection({
   showFilters = true,
   buttonText = "New",
   onNewClick,
+  onSearchChange,
+  onTypeChange,
+  onSortChange,
 }: SearchSectionProps) {
   const [isSearching, setIsSearching] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
   const [isType, setIsType] = useState(false);
   const [isSort, setIsSort] = useState(false);
 
@@ -79,10 +86,19 @@ export default function SearchSection({
             placeholder="Search..."
             className="w-full pl-8 outline-none text-brownbold font-semibold text-sm placeholder-brownbold/45 bg-transparent"
             autoFocus
+            value={searchVal}
+            onChange={(e) => {
+              setSearchVal(e.target.value);
+              onSearchChange?.(e.target.value);
+            }}
           />
           <Search size={18} className="absolute left-2.5 text-brownbold/75" />
           <button
-            onClick={() => setIsSearching(false)}
+            onClick={() => {
+              setIsSearching(false);
+              setSearchVal("");
+              onSearchChange?.("");
+            }}
             className="p-0.5 hover:bg-brownbold/10 rounded cursor-pointer"
           >
             <X size={16} className="text-brownbold" />
@@ -128,6 +144,7 @@ export default function SearchSection({
                     onClick={() => {
                       setSelectedType(type === "All" ? "Type" : type);
                       setIsType(false);
+                      onTypeChange?.(type);
                     }}
                     className={`w-full text-left px-3 py-2 font-bold text-brownbold hover:bg-[#4A3728] hover:text-[#EFEAD8] transition-colors duration-150 flex items-center justify-between ${(type === "All" && selectedType === "Type") || selectedType === type ? "bg-[#4A3728]/10" : ""}`}
                   >
@@ -169,6 +186,7 @@ export default function SearchSection({
                         option === "Default" ? "Sort By" : option,
                       );
                       setIsSort(false);
+                      onSortChange?.(option);
                     }}
                     className={`w-full text-left px-3 py-2 font-bold text-brownbold hover:bg-[#4A3728] hover:text-[#EFEAD8] transition-colors duration-150 flex items-center justify-between ${(option === "Default" && selectedSort === "Sort By") || selectedSort === option ? "bg-[#4A3728]/10" : ""}`}
                   >
@@ -188,7 +206,7 @@ export default function SearchSection({
       {/* CREATE NEW BUTTON */}
       {showCreateForm && (
         <div
-          onClick={onNewClick}
+          onClick={() => onNewClick?.()}
           className="bg-boldcream border-2 rounded-sm gap-2 border-brownbold neodesign flex items-center justify-center cursor-pointer h-10 hover:bg-[#F5F2EB] transition-colors col-span-1"
         >
           <PencilLine size={18} className="text-brownbold" />
