@@ -2,26 +2,15 @@ export const dataTemplate = [
   {
     category: "College",
     title: "Coursework",
-    requirements: ["Task description", "Deadline date", "Priority level"],
-  },
-  {
-    category: "Productivity",
-    title: "Daily Planner",
-    requirements: ["Task list", "Time schedule", "Priority level"],
+    description: "A Template for your coursework",
+    priority: "High",
+    dueDate: 5,
   },
   {
     category: "Work",
     title: "Project Tracker",
-    requirements: ["Project name", "Description", "Deadline date"],
-  },
-  {
-    category: "Personal",
-    title: "Habit Tracker",
-    requirements: ["Habit name", "Frequency", "Status"],
-  },
-  {
-    category: "College",
-    title: "Finance",
-    requirements: [],
+    description: "A Template for your project",
+    priority: "High",
+    dueDate: 5,
   },
 ];

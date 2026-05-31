@@ -1,6 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
-import { X, Check, Tag, Calendar, AlertCircle, PencilLine } from "lucide-react";
+import {
+  X,
+  Check,
+  Tag,
+  Calendar,
+  AlertCircle,
+  PencilLine,
+  Clock,
+} from "lucide-react";
+import PrioritySelector from "./priority-selector";
 
 // For Task and Template
 export interface ModalFormData {
@@ -10,7 +19,7 @@ export interface ModalFormData {
   priority?: string;
   category: string;
   dueDate?: string;
-  requirements?: string[];
+  dueDays?: number;
 }
 
 interface FormModalProps {
@@ -41,9 +50,12 @@ export default function FormModal({
 
   // --- STATE FOR TEMPLATE ---
   const [templateTitle, setTemplateTitle] = useState("");
+  const [templateDesc, setTemplateDesc] = useState("");
   const [templateCategory, setTemplateCategory] = useState("College");
-  const [requirements, setRequirements] = useState<string[]>([""]);
+  const [templatePriority, setTemplatePriority] = useState("medium");
+  const [templateDueDays, setTemplateDueDays] = useState<number | "">("");
 
+  // --- STATE FOR UI ---
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,8 +74,10 @@ export default function FormModal({
         setTaskDueDate(initialData?.dueDate || "");
       } else {
         setTemplateTitle(initialData?.title || "");
+        setTemplateDesc(initialData?.description || "");
         setTemplateCategory(initialData?.category || "College");
-        setRequirements(initialData?.requirements || [""]);
+        setTemplatePriority(initialData?.priority || "medium");
+        setTemplateDueDays(initialData?.dueDays ?? "");
       }
     }
   }, [isOpen, initialData, mode]);
@@ -79,18 +93,6 @@ export default function FormModal({
     };
   }, [isOpen]);
 
-  const handleRequirementChange = (index: number, value: string) => {
-    const updated = [...requirements];
-    updated[index] = value;
-    setRequirements(updated);
-  };
-
-  const addRequirementField = () => setRequirements([...requirements, ""]);
-  const removeRequirementField = (index: number) => {
-    const updated = requirements.filter((_, i) => i !== index);
-    setRequirements(updated.length === 0 ? [""] : updated);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
@@ -102,6 +104,10 @@ export default function FormModal({
     }
     if (mode === "template" && !templateTitle.trim()) {
       setFormError("Template Title is required!");
+      return;
+    }
+    if (mode === "template" && templateDueDays === "") {
+      setFormError("Due Days is required for templates!");
       return;
     }
 
@@ -120,15 +126,13 @@ export default function FormModal({
           dueDate: taskDueDate || undefined,
         };
       } else {
-        const validRequirements = requirements
-          .map((req) => req.trim())
-          .filter((req) => req !== "");
-
         payload = {
           ...(initialData?.id && { id: initialData.id }),
           title: templateTitle.trim(),
+          description: templateDesc,
+          priority: templatePriority,
           category: templateCategory,
-          requirements: validRequirements,
+          dueDays: Number(templateDueDays), // Convert string to pure int
         };
       }
 
@@ -238,48 +242,10 @@ export default function FormModal({
                   <label className="text-xs uppercase font-extrabold text-brownbold block">
                     Task Priority
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
-                    {["high", "medium", "low"].map((prio) => {
-                      const configs: Record<
-                        string,
-                        { bg: string; text: string; dot: string }
-                      > = {
-                        high: {
-                          bg: "bg-[#EA4335]",
-                          text: "text-white",
-                          dot: "bg-red-600",
-                        },
-                        medium: {
-                          bg: "bg-[#FBBC05]",
-                          text: "text-brownbold",
-                          dot: "bg-yellow-500",
-                        },
-                        low: {
-                          bg: "bg-[#34A853]",
-                          text: "text-white",
-                          dot: "bg-green-600",
-                        },
-                      };
-                      const active = taskPriority === prio;
-                      return (
-                        <button
-                          key={prio}
-                          type="button"
-                          onClick={() => setTaskPriority(prio)}
-                          className={`py-2 px-3 border-2 border-brownbold rounded-lg font-bold text-xs tracking-wide transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                            active
-                              ? `${configs[prio].bg} ${configs[prio].text} shadow-[2px_2px_0px_0px_#4A3728] translate-x-px translate-y-px`
-                              : `bg-transparent opacity-60 hover:opacity-100`
-                          }`}
-                        >
-                          <span
-                            className={`w-2.5 h-2.5 rounded-full ${configs[prio].dot} border border-black shrink-0`}
-                          />
-                          {prio.toUpperCase()}
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <PrioritySelector
+                    value={taskPriority}
+                    onChange={setTaskPriority}
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -350,75 +316,80 @@ export default function FormModal({
 
                 <div className="space-y-1.5 text-left">
                   <label
-                    htmlFor="templateCategory"
-                    className="text-xs uppercase font-extrabold text-brownbold flex items-center gap-1"
+                    htmlFor="templateDesc"
+                    className="text-xs uppercase font-extrabold text-brownbold block"
                   >
-                    <Tag size={13} /> Category
+                    Template Description
                   </label>
-                  <select
-                    id="templateCategory"
-                    value={templateCategory}
-                    onChange={(e) => setTemplateCategory(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-white border-2 border-brownbold rounded-lg text-brownbold font-bold cursor-pointer"
-                  >
-                    <option value="College" className="bg-boldcream font-bold">
-                      College
-                    </option>
-                    <option
-                      value="Productivity"
-                      className="bg-boldcream font-bold"
-                    >
-                      Productivity
-                    </option>
-                    <option value="Work" className="bg-boldcream font-bold">
-                      Work
-                    </option>
-                    <option value="Personal" className="bg-boldcream font-bold">
-                      Personal
-                    </option>
-                  </select>
+                  <textarea
+                    id="templateDesc"
+                    rows={2}
+                    placeholder="Briefly explain what this template is for..."
+                    value={templateDesc}
+                    onChange={(e) => setTemplateDesc(e.target.value)}
+                    className="w-full px-3.5 py-2 bg-white border-2 border-brownbold rounded-lg text-brownbold font-medium outline-none focus:ring-2 focus:ring-[#4A3728] placeholder-brownbold/40 text-sm resize-none"
+                  />
                 </div>
 
-                <div className="space-y-2 text-left pt-2">
+                <div className="space-y-1.5 text-left">
                   <label className="text-xs uppercase font-extrabold text-brownbold block">
-                    Requirements{" "}
-                    <span className="text-brownbold/50 font-normal lowercase">
-                      (optional)
-                    </span>
+                    Default Priority
                   </label>
+                  <PrioritySelector
+                    value={templatePriority}
+                    onChange={setTemplatePriority}
+                  />
+                </div>
 
-                  <div className="space-y-2">
-                    {requirements.map((req, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <input
-                          type="text"
-                          placeholder={`Requirement #${index + 1}`}
-                          value={req}
-                          onChange={(e) =>
-                            handleRequirementChange(index, e.target.value)
-                          }
-                          className="w-full px-3.5 py-2 bg-white border-2 border-brownbold rounded-lg text-brownbold font-medium placeholder-brownbold/30 text-sm"
-                        />
-                        {requirements.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => removeRequirementField(index)}
-                            className="p-2 border-2 border-brownbold rounded-lg text-red-600 bg-red-50 hover:bg-red-100 transition-colors cursor-pointer shrink-0"
-                          >
-                            <X size={16} />
-                          </button>
-                        )}
-                      </div>
-                    ))}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5 text-left">
+                    <label
+                      htmlFor="templateCategory"
+                      className="text-xs uppercase font-extrabold text-brownbold flex items-center gap-1"
+                    >
+                      <Tag size={13} /> Category
+                    </label>
+                    <select
+                      id="templateCategory"
+                      value={templateCategory}
+                      onChange={(e) => setTemplateCategory(e.target.value)}
+                      className="w-full px-3.5 py-2 bg-boldcream border-2 border-brownbold rounded-lg text-brownbold font-bold cursor-pointer text-sm"
+                    >
+                      {types.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={addRequirementField}
-                    className="w-full mt-1 py-2 border-2 border-dashed border-brownbold/60 rounded-lg text-brownbold font-bold text-xs hover:bg-brownbold/5 transition-all flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <span>+ Add Requirement</span>
-                  </button>
+                  <div className="space-y-1.5 text-left">
+                    <label
+                      htmlFor="templateDueDays"
+                      className="text-xs uppercase font-extrabold text-brownbold flex items-center gap-1"
+                    >
+                      <Clock size={13} /> Due Days{" "}
+                      <span className="text-red-600">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="number"
+                        id="templateDueDays"
+                        min="0"
+                        placeholder="e.g. 3"
+                        value={templateDueDays}
+                        onChange={(e) =>
+                          setTemplateDueDays(
+                            e.target.value ? Number(e.target.value) : "",
+                          )
+                        }
+                        className="w-full px-3.5 py-1.5 pr-10 bg-white border-2 border-brownbold rounded-lg text-brownbold font-bold text-sm outline-none focus:ring-2 focus:ring-[#4A3728]"
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-brownbold/60">
+                        Days
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </>
             )}
