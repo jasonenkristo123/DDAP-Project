@@ -98,7 +98,9 @@ export default function TodosPage() {
       description: payload.description,
       priority: payload.priority ?? "medium",
       category: payload.category,
-      due_date: payload.dueDate ? new Date(payload.dueDate).toISOString() : undefined,
+      due_date: payload.dueDate
+        ? new Date(payload.dueDate).toISOString()
+        : undefined,
     };
 
     if (payload.id) {
@@ -141,9 +143,13 @@ export default function TodosPage() {
       />
       <div className="mt-10">
         {loading ? (
-          <p className="text-center font-bold text-brownbold">Loading tasks...</p>
+          <p className="text-center font-bold text-brownbold">
+            Loading tasks...
+          </p>
         ) : todos.length === 0 ? (
-          <p className="text-center text-brownbold/60 font-semibold">No tasks found.</p>
+          <p className="text-center text-brownbold/60 font-semibold">
+            No tasks found.
+          </p>
         ) : (
           todos.map((data, index) => (
             <TodoItem

@@ -94,21 +94,22 @@ export default function TodoItem({
   const displayDesc = data.description ?? data.desc ?? "";
   const displayPriority = data.priority ?? "low";
   const displayProgress = data.status ?? data.progress ?? "ToDo";
-  const displayDateCreate = data.created_at 
-    ? new Date(data.created_at).toLocaleDateString("en-GB") 
+  const displayDateCreate = data.created_at
+    ? new Date(data.created_at).toLocaleDateString("en-GB")
     : (data.dateCreate ?? "");
-  const displayDateDone = data.due_date 
-    ? new Date(data.due_date).toLocaleDateString("en-GB") 
+  const displayDateDone = data.due_date
+    ? new Date(data.due_date).toLocaleDateString("en-GB")
     : (data.dateDone ?? "");
 
   return (
     <div className="w-full mt-3">
       <div
         id={`todo-card-${currentId}`}
-        className={`pb-2 px-2 rounded-md transition-all duration-300 ${isHighlighted
-          ? "animate-highlight border-[#4A3728] ring-2 ring-[#4A3728]/30"
-          : ""
-          }`}
+        className={`pb-2 px-2 rounded-md transition-all duration-300 ${
+          isHighlighted
+            ? "animate-highlight border-[#4A3728] ring-2 ring-[#4A3728]/30"
+            : ""
+        }`}
       >
         <div className="w-full bg-black h-[3px]" />
         <div className="flex items-center justify-between mt-3">
@@ -139,7 +140,6 @@ export default function TodoItem({
                 className={`${displayPriority.toLowerCase() === "high" ? "bg-red-500" : displayPriority.toLowerCase() === "medium" ? "bg-orange-400" : displayPriority.toLowerCase() === "low" ? "bg-green-500" : "bg-blue-500"} w-3 h-3 rounded-full `}
               />
               <p className="capitalize font-medium">{displayPriority}</p>
-
             </div>
             <div className="flex items-center gap-2">
               <p>{displayDateCreate}</p>
@@ -148,8 +148,7 @@ export default function TodoItem({
             </div>
           </div>
 
-
-          <div 
+          <div
             className="cursor-pointer"
             onClick={() => {
               const id = data.id_todo ?? data.id;

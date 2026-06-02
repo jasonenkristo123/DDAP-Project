@@ -1,9 +1,9 @@
-import TemplatesPage from "@/components/Templates/TemplatesPage"
+import TemplatesPage from "@/components/Templates/TemplatesPage";
 
 export default function Templates() {
-    return (
-        <div className="w-full h-full">
-            <TemplatesPage />
-        </div>
-    )
+  return (
+    <div className="w-full h-full">
+      <TemplatesPage />
+    </div>
+  );
 }

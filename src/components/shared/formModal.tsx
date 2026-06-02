@@ -44,7 +44,7 @@ export default function FormModal({
   // --- STATE FOR TASK ---
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
-  const [taskPriority, setTaskPriority] = useState("medium");
+  const [taskPriority, setTaskPriority] = useState("Medium");
   const [taskCategory, setTaskCategory] = useState("Work");
   const [taskDueDate, setTaskDueDate] = useState("");
 

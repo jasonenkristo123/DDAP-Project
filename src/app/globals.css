@@ -97,7 +97,7 @@ body {
 @layer utilities {
   @keyframes highlight-flash {
     0% {
-      background-color: #FFE9CD;
+      background-color: #ffe9cd;
       box-shadow: 0 0 15px rgba(74, 55, 40, 0.3);
     }
     100% {

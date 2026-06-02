@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const manrope = Manrope({
   variable: "--font-manrope",
-  subsets:["latin"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
 
@@ -20,10 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className="h-full antialiased"
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         <LayoutShell>{children}</LayoutShell>
       </body>

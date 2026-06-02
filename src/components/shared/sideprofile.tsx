@@ -220,7 +220,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
         linkedin: editProfile.linkedin,
         profilePhotoUrl: editProfile.avatar,
       };
-      
+
       const res = await UpdateProfile(1, updatedProfile);
       if (res && res.data) {
         const data = res.data;
@@ -238,7 +238,7 @@ export default function SideProfile({ isOpen, onClose }: SideProfileProps) {
       } else {
         setProfile(editProfile);
       }
-      
+
       window.dispatchEvent(new Event("geulist_profile_updated"));
       setIsEditing(false);
     } catch (e) {

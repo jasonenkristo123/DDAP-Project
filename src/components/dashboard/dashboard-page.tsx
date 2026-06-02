@@ -25,13 +25,33 @@ ChartJS.register(
 import { getAllTodos } from "@/components/api/todolistApi";
 
 const MONTH_NAMES = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
 ];
 
 const MONTH_NAMES_EN = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 interface Todo {
@@ -77,7 +97,9 @@ function getDaysLeft(dueDateStr: string | undefined): number {
   if (!dueDateStr) return 0;
   const due = new Date(dueDateStr);
   const now = new Date();
-  const diff = Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  const diff = Math.ceil(
+    (due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
+  );
   return Math.max(0, diff);
 }
 
@@ -142,10 +164,10 @@ export default function Home() {
   });
 
   const createdTodos = todosThisMonth.filter(
-    (t) => (t.status ?? t.progress ?? "ToDo").toLowerCase() !== "done"
+    (t) => (t.status ?? t.progress ?? "ToDo").toLowerCase() !== "done",
   );
   const completedTodos = todosThisMonth.filter(
-    (t) => (t.status ?? t.progress ?? "").toLowerCase() === "done"
+    (t) => (t.status ?? t.progress ?? "").toLowerCase() === "done",
   );
 
   const contributionCreated = createdTodos.map((t) => ({
@@ -157,7 +179,9 @@ export default function Home() {
 
   const contributionComplete = completedTodos.map((t) => ({
     title: t.title,
-    date: formatDateShort(t.due_date || t.dateDone || t.created_at || t.dateCreate),
+    date: formatDateShort(
+      t.due_date || t.dateDone || t.created_at || t.dateCreate,
+    ),
     priority: "completed",
   }));
 
@@ -166,7 +190,9 @@ export default function Home() {
   if (loading) {
     return (
       <main className="p-4 md:p-8 lg:p-15 w-full min-h-full">
-        <p className="text-center font-bold text-brownbold">Loading dashboard...</p>
+        <p className="text-center font-bold text-brownbold">
+          Loading dashboard...
+        </p>
       </main>
     );
   }
@@ -176,13 +202,19 @@ export default function Home() {
       <h1 className="text-xl font-semibold">Pinned</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full mt-4">
         {pinnedTodos.length === 0 ? (
-          <p className="text-brownbold/60 font-semibold col-span-2">No pinned todos. Pin a todo from the Todos page!</p>
+          <p className="text-brownbold/60 font-semibold col-span-2">
+            No pinned todos. Pin a todo from the Todos page!
+          </p>
         ) : (
           pinnedTodos.map((data, index) => {
             const todoId = data.id_todo ?? data.id ?? index;
             const displayPriority = data.priority ?? "low";
-            const displayDateCreate = formatDateForDisplay(data.created_at || data.dateCreate);
-            const displayDateDone = formatDateForDisplay(data.due_date || data.dateDone);
+            const displayDateCreate = formatDateForDisplay(
+              data.created_at || data.dateCreate,
+            );
+            const displayDateDone = formatDateForDisplay(
+              data.due_date || data.dateDone,
+            );
             const displayDesc = data.description ?? data.desc ?? "";
 
             return (
@@ -226,7 +258,9 @@ export default function Home() {
       </div>
 
       <div className="w-full lg:max-w-[82%] flex justify-between items-center mt-10 md:mt-20">
-        <h2 className="text-lg md:text-xl font-medium">{totalTodosYear} todos last year</h2>
+        <h2 className="text-lg md:text-xl font-medium">
+          {totalTodosYear} todos last year
+        </h2>
         <h3 className="text-xs md:text-sm">Contribution Settings</h3>
       </div>
 
@@ -314,9 +348,13 @@ export default function Home() {
         <div className="mt-4 md:mt-10 w-full min-w-0">
           <div className="flex items-center gap-2 md:hidden">
             <SquarePlus className="w-5 h-5 shrink-0" />
-            <h3 className="text-lg font-medium">Created {createdTodos.length} Todo List</h3>
+            <h3 className="text-lg font-medium">
+              Created {createdTodos.length} Todo List
+            </h3>
           </div>
-          <h3 className="text-xl hidden md:block">Created {createdTodos.length} Todo List</h3>
+          <h3 className="text-xl hidden md:block">
+            Created {createdTodos.length} Todo List
+          </h3>
           {contributionCreated.map((data, index) => (
             <div
               key={index}
@@ -341,9 +379,13 @@ export default function Home() {
           <div className="w-full lg:max-w-[85%] mt-8 md:mt-13 space-y-4">
             <div className="flex items-center gap-2 md:hidden">
               <SquareCheckBig className="w-5 h-5 shrink-0" />
-              <h3 className="text-lg font-medium">Complete {completedTodos.length} Todo List</h3>
+              <h3 className="text-lg font-medium">
+                Complete {completedTodos.length} Todo List
+              </h3>
             </div>
-            <h3 className="text-xl hidden md:block">Complete {completedTodos.length} Todo List</h3>
+            <h3 className="text-xl hidden md:block">
+              Complete {completedTodos.length} Todo List
+            </h3>
             {contributionComplete.map((data, index) => (
               <div
                 key={index}

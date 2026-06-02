@@ -6,7 +6,7 @@ export const dataPinned = [
     priority: "high",
     dateCreate: "10/03/2026",
     dateDone: "20/03/2026",
-    progress: "In Progress"
+    progress: "In Progress",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const dataPinned = [
     priority: "Medium",
     dateCreate: "26/03/2026",
     dateDone: "03/04/2026",
-    progress: "In Progress"
+    progress: "In Progress",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ export const dataPinned = [
     priority: "Low",
     dateCreate: "26/03/2026",
     dateDone: "10/04/2026",
-    progress: "ToDo"
+    progress: "ToDo",
   },
   {
     id: 4,
@@ -33,6 +33,6 @@ export const dataPinned = [
     priority: "Done",
     dateCreate: "10/03/2026",
     dateDone: "16/03/2026",
-    progress: "Done"
+    progress: "Done",
   },
 ];

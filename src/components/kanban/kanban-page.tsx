@@ -32,7 +32,11 @@ export default function KanbanPage() {
   const fetchTodos = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await getAllTodos({ sortBy: "created_at", orderBy: "desc", limit: 100 });
+      const res = await getAllTodos({
+        sortBy: "created_at",
+        orderBy: "desc",
+        limit: 100,
+      });
       if (res && res.data) {
         setTodos(res.data);
       }
@@ -46,7 +50,6 @@ export default function KanbanPage() {
   useEffect(() => {
     fetchTodos();
   }, [fetchTodos]);
-
 
   const getTodoId = (todo: Todo): number => {
     return Number(todo.id_todo ?? todo.id ?? 0);
@@ -117,7 +120,8 @@ export default function KanbanPage() {
       Done: "Done",
     };
     const apiStatus = statusMap[targetColumn];
-    const displayStatus = targetColumn === "In Progress" ? "In Progress" : targetColumn;
+    const displayStatus =
+      targetColumn === "In Progress" ? "In Progress" : targetColumn;
     const previousTodos = [...todos];
 
     setTodos((prev) =>
@@ -126,7 +130,7 @@ export default function KanbanPage() {
           return { ...todo, status: displayStatus };
         }
         return todo;
-      })
+      }),
     );
 
     try {
@@ -140,7 +144,6 @@ export default function KanbanPage() {
       setActiveColumn(null);
     }
   };
-
 
   const getStatusColumn = (todo: Todo): ColumnType => {
     const s = (todo.status || "ToDo").toLowerCase().replace(/_/g, " ");
@@ -183,7 +186,6 @@ export default function KanbanPage() {
 
   const columns: ColumnType[] = ["ToDo", "In Progress", "Done"];
 
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[500px]">
@@ -202,7 +204,7 @@ export default function KanbanPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 min-h-[650px]">
         {columns.map((column) => {
           const columnTodos = todos.filter(
-            (todo) => getStatusColumn(todo) === column
+            (todo) => getStatusColumn(todo) === column,
           );
           const isOver = activeColumn === column;
 
@@ -215,19 +217,12 @@ export default function KanbanPage() {
               className="flex flex-col rounded-xl overflow-hidden transition-all duration-300"
               style={{
                 backgroundColor: isOver ? "#FFE0B2" : "#FFEAD0",
-                border: isOver
-                  ? "2px dashed #644a40"
-                  : "2px solid transparent",
+                border: isOver ? "2px dashed #644a40" : "2px solid transparent",
                 transform: isOver ? "scale(1.01)" : "scale(1)",
               }}
             >
-
-              <div
-                className="py-3 px-4 text-center select-none bg-brownbold"
-              >
-                <h2
-                  className="text-xl xl:text-2xl font-bold tracking-wide text-boldcream"
-                >
+              <div className="py-3 px-4 text-center select-none bg-brownbold">
+                <h2 className="text-xl xl:text-2xl font-bold tracking-wide text-boldcream">
                   {COLUMN_LABELS[column]}
                 </h2>
               </div>
@@ -301,7 +296,7 @@ export default function KanbanPage() {
                                 className="w-2.5 h-2.5 rounded-full shrink-0"
                                 style={{
                                   backgroundColor: getPriorityColor(
-                                    todo.priority
+                                    todo.priority,
                                   ),
                                 }}
                               />

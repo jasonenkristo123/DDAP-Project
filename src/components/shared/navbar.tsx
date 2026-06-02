@@ -92,20 +92,22 @@ export default function Navbar({ onProfileToggle }: NavbarProps) {
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-t-md font-medium text-sm transition-all duration-200 ${isActive
+                  className={`flex items-center gap-2 px-4 py-2 rounded-t-md font-medium text-sm transition-all duration-200 ${
+                    isActive
                       ? "bg-[#4A3728] text-[#EFEAD8] shadow-sm"
                       : "text-[#332211] hover:bg-[#DED7BF]"
-                    }`}
+                  }`}
                 >
                   <item.icon className="w-5 h-5" />
                   <span>{item.name}</span>
 
                   {item.badge !== undefined && (
                     <span
-                      className={`inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full border ${isActive
+                      className={`inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full border ${
+                        isActive
                           ? "bg-[#FFDFB5] text-[#4A3728] border-black"
                           : "bg-[#FFDFB5] text-[#332211] border-black"
-                        }`}
+                      }`}
                     >
                       {item.badge}
                     </span>
@@ -139,9 +141,7 @@ export default function Navbar({ onProfileToggle }: NavbarProps) {
           <div
             className="fixed inset-0 bg-black/30 z-30"
             onClick={() => setIsMobileMenuOpen(false)}
-            onKeyDown={(e) =>
-              e.key === "Escape" && setIsMobileMenuOpen(false)
-            }
+            onKeyDown={(e) => e.key === "Escape" && setIsMobileMenuOpen(false)}
           />
 
           {/* Dropdown panel */}
@@ -155,20 +155,22 @@ export default function Navbar({ onProfileToggle }: NavbarProps) {
                     key={item.path}
                     href={item.path}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-5 py-3 font-medium text-sm transition-all duration-150 ${isActive
+                    className={`flex items-center gap-3 px-5 py-3 font-medium text-sm transition-all duration-150 ${
+                      isActive
                         ? "bg-[#4A3728] text-[#EFEAD8]"
                         : "text-[#332211] hover:bg-[#DED7BF]"
-                      }`}
+                    }`}
                   >
                     <item.icon className="w-5 h-5" />
                     <span>{item.name}</span>
 
                     {item.badge !== undefined && (
                       <span
-                        className={`inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full border ml-auto ${isActive
+                        className={`inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full border ml-auto ${
+                          isActive
                             ? "bg-[#FFDFB5] text-[#4A3728] border-black"
                             : "bg-[#FFDFB5] text-[#332211] border-black"
-                          }`}
+                        }`}
                       >
                         {item.badge}
                       </span>

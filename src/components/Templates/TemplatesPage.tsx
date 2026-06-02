@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import SearchSection from "../shared/search-section";
 import TemplateCard, { TemplateData } from "./TemplateCard";
 import FormModal, { ModalFormData } from "../shared/formModal";
-import { getAllTemplates, createTemplate, useTemplate } from "../api/templateApi";
+import {
+  getAllTemplates,
+  createTemplate,
+  useTemplate,
+} from "../api/templateApi";
 
 export default function TemplatesPage() {
   const [templates, setTemplates] = useState<TemplateData[]>([]);
@@ -63,7 +67,9 @@ export default function TemplatesPage() {
 
     try {
       await useTemplate(template.id_template);
-      alert(`Success using template "${template.title}"! A new todo has been added to your list.`);
+      alert(
+        `Success using template "${template.title}"! A new todo has been added to your list.`,
+      );
     } catch (err) {
       console.error("🚀 Error menggunakan template:", err);
       alert("Gagal menggunakan template. Silakan coba lagi.");
@@ -81,15 +87,21 @@ export default function TemplatesPage() {
           onSearchChange={setSearchVal}
         />
       </div>
-      
+
       {isLoading ? (
         <div className="flex justify-center items-center py-20">
-          <p className="text-lg font-bold text-brownbold animate-pulse">Loading templates...</p>
+          <p className="text-lg font-bold text-brownbold animate-pulse">
+            Loading templates...
+          </p>
         </div>
       ) : templates.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-lg font-bold text-brownbold/70">No templates found.</p>
-          <p className="text-sm text-brownbold/50">Try searching for something else or create a new template!</p>
+          <p className="text-lg font-bold text-brownbold/70">
+            No templates found.
+          </p>
+          <p className="text-sm text-brownbold/50">
+            Try searching for something else or create a new template!
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
